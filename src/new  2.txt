@@ -1,0 +1,1 @@
+unsigned char pchMessageStart[4] = { 0xfb, 0xc0, 0xb6, 0xdb }; // nanotoken: increase each by adding 2 to bitcoin's value.
