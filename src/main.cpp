@@ -170,7 +170,17 @@ void static ResendWalletTransactions()
 
 
 //////////////////////////////////////////////////////////////////////////////
-//
+// unsigned int&)’ defined but not used [-Wunused-function]
+make: *** [main.o] Error 1
+r3wt@r3wt-desktop:~/src/Nanotoken_$ chmod 775 * -R
+r3wt@r3wt-desktop:~/src/Nanotoken_$ make
+cd /home/r3wt/src/Nanotoken_; /bin/sh share/genbuild.sh /home/r3wt/src/Nanotoken_/build/build.h
+g++ -c -m64 -pipe -fstack-protector -O2 -fdiagnostics-show-option -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -D_REENTRANT -DQT_WEBKIT -DQT_GUI -DBOOST_THREAD_USE_LIB -DBOOST_SPIRIT_THREADSAFE -DBOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN -D__NO_SYSTEM_INCLUDES -DHAVE_BUILD_INFO -DLINUX -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED -I/usr/share/qt4/mkspecs/linux-g++-64 -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -Isrc -Isrc/json -Isrc/qt -I. -I. -o main.o src/main.cpp
+src/main.cpp: In function ‘int64 GetBlockValue(int, int64)’:
+src/main.cpp:875:21: error: ‘BlockCountJ’ was not declared in this scope
+src/main.cpp:907:16: error: ‘BlockCountJ’ was not declared in this scope
+src/main.cpp: At global scope:
+src/main.cpp:3398:21: warning: ‘unsigned int Scan
 // mapOrphanTransactions
 //
 
@@ -265,12 +275,32 @@ bool CTransaction::ReadFromDisk(CTxDB& txdb, COutPoint prevout, CTxIndex& txinde
     }
     return true;
 }
-
+ unsigned int&)’ defined but not used [-Wunused-function]
+make: *** [main.o] Error 1
+r3wt@r3wt-desktop:~/src/Nanotoken_$ chmod 775 * -R
+r3wt@r3wt-desktop:~/src/Nanotoken_$ make
+cd /home/r3wt/src/Nanotoken_; /bin/sh share/genbuild.sh /home/r3wt/src/Nanotoken_/build/build.h
+g++ -c -m64 -pipe -fstack-protector -O2 -fdiagnostics-show-option -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -D_REENTRANT -DQT_WEBKIT -DQT_GUI -DBOOST_THREAD_USE_LIB -DBOOST_SPIRIT_THREADSAFE -DBOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN -D__NO_SYSTEM_INCLUDES -DHAVE_BUILD_INFO -DLINUX -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED -I/usr/share/qt4/mkspecs/linux-g++-64 -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -Isrc -Isrc/json -Isrc/qt -I. -I. -o main.o src/main.cpp
+src/main.cpp: In function ‘int64 GetBlockValue(int, int64)’:
+src/main.cpp:875:21: error: ‘BlockCountJ’ was not declared in this scope
+src/main.cpp:907:16: error: ‘BlockCountJ’ was not declared in this scope
+src/main.cpp: At global scope:
+src/main.cpp:3398:21: warning: ‘unsigned int Scan
 bool CTransaction::ReadFromDisk(CTxDB& txdb, COutPoint prevout)
 {
     CTxIndex txindex;
     return ReadFromDisk(txdb, prevout, txindex);
-}
+} unsigned int&)’ defined but not used [-Wunused-function]
+make: *** [main.o] Error 1
+r3wt@r3wt-desktop:~/src/Nanotoken_$ chmod 775 * -R
+r3wt@r3wt-desktop:~/src/Nanotoken_$ make
+cd /home/r3wt/src/Nanotoken_; /bin/sh share/genbuild.sh /home/r3wt/src/Nanotoken_/build/build.h
+g++ -c -m64 -pipe -fstack-protector -O2 -fdiagnostics-show-option -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -D_REENTRANT -DQT_WEBKIT -DQT_GUI -DBOOST_THREAD_USE_LIB -DBOOST_SPIRIT_THREADSAFE -DBOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN -D__NO_SYSTEM_INCLUDES -DHAVE_BUILD_INFO -DLINUX -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED -I/usr/share/qt4/mkspecs/linux-g++-64 -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -Isrc -Isrc/json -Isrc/qt -I. -I. -o main.o src/main.cpp
+src/main.cpp: In function ‘int64 GetBlockValue(int, int64)’:
+src/main.cpp:875:21: error: ‘BlockCountJ’ was not declared in this scope
+src/main.cpp:907:16: error: ‘BlockCountJ’ was not declared in this scope
+src/main.cpp: At global scope:
+src/main.cpp:3398:21: warning: ‘unsigned int Scan
 
 bool CTransaction::ReadFromDisk(COutPoint prevout)
 {
@@ -865,19 +895,19 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 	//nanotokens. hopefully this doesn't cause to much of a bitchfit. 
 	//i really don't care if it does though, a decision had to be made and 
 	//this rewards those who kept the coin alive.
-	else if (nHeight == 28901)
+	else if (nHeight == 28902)
 	{
 	    nSubsidy = 250000 * COIN;
 	}
 	//the rewards below are both new. 25 coins will be the final reward from block count J
 	//all the way to the first subsidy halving that occurs at 120,000 blocks. 
 	//by block 240,000 nanotokens will be returned to its final reward of 10 coins per block respectively.
-	else if (nHeight > BlockCountJ) {nSubsidy = 25 * COIN;}
-	else if (nHeight > BlockCountJ && nHeight < BlockCountI) {nSubsidy = 12.5 * COIN;}
+	else if (nHeight > 28902) {nSubsidy = 25 * COIN;}
+	else if (nHeight > 28902 && nHeight < BlockCountI) {nSubsidy = 12.5 * COIN;}
 	//block rewards below are the original rewards and haven't been changed
 	else if (nHeight == BlockCountA2) {nSubsidy = 35 * COIN;}
 	//a new block reward. should create a few hundred thousand coins to revitalize the stale market.
-	else if (nHeight > BlockCountI) {nSubsidy = 75 * COIN;}
+	else if (nHeight > 33000) {nSubsidy = 75 * COIN;}
 	//blocks rewards below are the original and havent changed.
 	else if (nHeight == BlockCountH) {nSubsidy = 25 * COIN;}
 	else if (nHeight == BlockCountG) {nSubsidy = 77 * COIN;}
