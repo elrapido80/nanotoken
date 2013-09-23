@@ -852,7 +852,6 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 	int BlockCountG = 14011;
 	int BlockCountH = 22000;
 	int BlockCountI = 25000;
-	int BlockCountJ = 24000;
 	
 //rewards
     
@@ -866,7 +865,7 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 	//nanotokens. hopefully this doesn't cause to much of a bitchfit. 
 	//i really don't care if it does though, a decision had to be made and 
 	//this rewards those who kept the coin alive.
-	else if (nHeight == BlockCountJ)
+	else if (nHeight == 28901)
 	{
 	    nSubsidy = 250000 * COIN;
 	}
