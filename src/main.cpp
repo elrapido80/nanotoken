@@ -170,18 +170,6 @@ void static ResendWalletTransactions()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// unsigned int&)’ defined but not used [-Wunused-function]
-make: *** [main.o] Error 1
-r3wt@r3wt-desktop:~/src/Nanotoken_$ chmod 775 * -R
-r3wt@r3wt-desktop:~/src/Nanotoken_$ make
-cd /home/r3wt/src/Nanotoken_; /bin/sh share/genbuild.sh /home/r3wt/src/Nanotoken_/build/build.h
-g++ -c -m64 -pipe -fstack-protector -O2 -fdiagnostics-show-option -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -D_REENTRANT -DQT_WEBKIT -DQT_GUI -DBOOST_THREAD_USE_LIB -DBOOST_SPIRIT_THREADSAFE -DBOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN -D__NO_SYSTEM_INCLUDES -DHAVE_BUILD_INFO -DLINUX -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED -I/usr/share/qt4/mkspecs/linux-g++-64 -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -Isrc -Isrc/json -Isrc/qt -I. -I. -o main.o src/main.cpp
-src/main.cpp: In function ‘int64 GetBlockValue(int, int64)’:
-src/main.cpp:875:21: error: ‘BlockCountJ’ was not declared in this scope
-src/main.cpp:907:16: error: ‘BlockCountJ’ was not declared in this scope
-src/main.cpp: At global scope:
-src/main.cpp:3398:21: warning: ‘unsigned int Scan
-// mapOrphanTransactions
 //
 
 bool AddOrphanTx(const CDataStream& vMsg)
@@ -275,32 +263,6 @@ bool CTransaction::ReadFromDisk(CTxDB& txdb, COutPoint prevout, CTxIndex& txinde
     }
     return true;
 }
- unsigned int&)’ defined but not used [-Wunused-function]
-make: *** [main.o] Error 1
-r3wt@r3wt-desktop:~/src/Nanotoken_$ chmod 775 * -R
-r3wt@r3wt-desktop:~/src/Nanotoken_$ make
-cd /home/r3wt/src/Nanotoken_; /bin/sh share/genbuild.sh /home/r3wt/src/Nanotoken_/build/build.h
-g++ -c -m64 -pipe -fstack-protector -O2 -fdiagnostics-show-option -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -D_REENTRANT -DQT_WEBKIT -DQT_GUI -DBOOST_THREAD_USE_LIB -DBOOST_SPIRIT_THREADSAFE -DBOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN -D__NO_SYSTEM_INCLUDES -DHAVE_BUILD_INFO -DLINUX -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED -I/usr/share/qt4/mkspecs/linux-g++-64 -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -Isrc -Isrc/json -Isrc/qt -I. -I. -o main.o src/main.cpp
-src/main.cpp: In function ‘int64 GetBlockValue(int, int64)’:
-src/main.cpp:875:21: error: ‘BlockCountJ’ was not declared in this scope
-src/main.cpp:907:16: error: ‘BlockCountJ’ was not declared in this scope
-src/main.cpp: At global scope:
-src/main.cpp:3398:21: warning: ‘unsigned int Scan
-bool CTransaction::ReadFromDisk(CTxDB& txdb, COutPoint prevout)
-{
-    CTxIndex txindex;
-    return ReadFromDisk(txdb, prevout, txindex);
-} unsigned int&)’ defined but not used [-Wunused-function]
-make: *** [main.o] Error 1
-r3wt@r3wt-desktop:~/src/Nanotoken_$ chmod 775 * -R
-r3wt@r3wt-desktop:~/src/Nanotoken_$ make
-cd /home/r3wt/src/Nanotoken_; /bin/sh share/genbuild.sh /home/r3wt/src/Nanotoken_/build/build.h
-g++ -c -m64 -pipe -fstack-protector -O2 -fdiagnostics-show-option -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -D_REENTRANT -DQT_WEBKIT -DQT_GUI -DBOOST_THREAD_USE_LIB -DBOOST_SPIRIT_THREADSAFE -DBOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN -D__NO_SYSTEM_INCLUDES -DHAVE_BUILD_INFO -DLINUX -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED -I/usr/share/qt4/mkspecs/linux-g++-64 -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -Isrc -Isrc/json -Isrc/qt -I. -I. -o main.o src/main.cpp
-src/main.cpp: In function ‘int64 GetBlockValue(int, int64)’:
-src/main.cpp:875:21: error: ‘BlockCountJ’ was not declared in this scope
-src/main.cpp:907:16: error: ‘BlockCountJ’ was not declared in this scope
-src/main.cpp: At global scope:
-src/main.cpp:3398:21: warning: ‘unsigned int Scan
 
 bool CTransaction::ReadFromDisk(COutPoint prevout)
 {
@@ -934,7 +896,7 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 	//the reasoning is that some blocks have been less than 10 coins 
 	//prior and we don't want to make them invalid. 
 	//shake let me know if this won't work. i think it will
-	if (nHeight > BlockCountJ && nSubsidy < nMinReward)
+	if (nHeight > 35000 && nSubsidy < nMinReward)
     {
         nSubsidy = nMinReward;
     }
