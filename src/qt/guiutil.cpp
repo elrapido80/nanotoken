@@ -128,7 +128,7 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 
 bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert NanoTokens:// to NanoTokens:
+    // Convert nanotoken:// to nanotoken:
     //
     //    Cannot handle this later, because nanotoken:// will cause Qt to see the part after // as host,
     //    which will lowercase it (and thus invalidate the address).
@@ -278,12 +278,12 @@ bool ToolTipToRichTextFilter::eventFilter(QObject *obj, QEvent *evt)
 #ifdef WIN32
 boost::filesystem::path static StartupShortcutPath()
 {
-    return GetSpecialFolderPath(CSIDL_STARTUP) / "NanoTokens.lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / "nanotoken.lnk";
 }
 
 bool GetStartOnSystemStartup()
 {
-    // check for NanoTokens.lnk
+    // check for nanotoken.lnk
     return boost::filesystem::exists(StartupShortcutPath());
 }
 
@@ -401,7 +401,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         // Write a nanotoken.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
-        optionFile << "Name=NanoTokens\n";
+        optionFile << "Name=nanotoken\n";
         optionFile << "Exec=" << pszExePath << " -min\n";
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -422,7 +422,7 @@ bool SetStartOnSystemStartup(bool fAutoStart) { return false; }
 HelpMessageBox::HelpMessageBox(QWidget *parent) :
     QMessageBox(parent)
 {
-    header = tr("nanotoken-qt") + " " + tr("version") + " " +
+    header = tr("nanotoken-Qt") + " " + tr("version") + " " +
         QString::fromStdString(FormatFullVersion()) + "\n\n" +
         tr("Usage:") + "\n" +
         "  nanotoken-qt [" + tr("command-line options") + "]                     " + "\n";
@@ -434,7 +434,7 @@ HelpMessageBox::HelpMessageBox(QWidget *parent) :
         "  -min                   " + tr("Start minimized") + "\n" +
         "  -splash                " + tr("Show splash screen on startup (default: 1)") + "\n";
 
-    setWindowTitle(tr("nanotoken-qt"));
+    setWindowTitle(tr("nanotoken-Qt"));
     setTextFormat(Qt::PlainText);
     // setMinimumWidth is ignored for QMessageBox so put in nonbreaking spaces to make it wider.
     setText(header + QString(QChar(0x2003)).repeated(50));

@@ -36,7 +36,7 @@ QString BitcoinUnits::name(int unit)
     {
     case BTC: return QString("NAN");
     case mBTC: return QString("mNAN");
-    case uBTC: return QString::fromUtf8("μNAN");
+    case uBTC: return QString("unNAN");
     default: return QString("???");
     }
 }
@@ -45,13 +45,13 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("NanoTokens");
-    case mBTC: return QString("milliNanoTokens (1 / 1,000)");
-    case uBTC: return QString("microNanoTokens (1 / 1,000,000)");
+    case BTC: return QString("Nanotoken");
+    case mBTC: return QString("Milli-Nanotoken (1 / 1,000)");
+    case uBTC: return QString("Micro-Nanotoken (1 / 1,000,000)");
     default: return QString("???");
     }
 }
-//a single unit (.00000001) of NanoTokens is called a "wander."
+
 qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)

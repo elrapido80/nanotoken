@@ -1,20 +1,11 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
+// Copyright (c) 2009-2010 Satoshi Nakamoto.
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2011-2012 Litecoin Developers
-// Copyright (c) 2013 r3wt and shakezula
-// 
-
+// Copyright (c) 2011-2013 Nanotoken Developers.
 // nanotoken by r3wt
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 
-
-
-
-
-
-//
 #include "checkpoints.h"
 #include "db.h"
 #include "net.h"
@@ -23,7 +14,7 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
-//
+
 using namespace std;
 using namespace boost;
 
@@ -171,6 +162,8 @@ void static ResendWalletTransactions()
 
 //////////////////////////////////////////////////////////////////////////////
 //
+// mapOrphanTransactions
+//
 
 bool AddOrphanTx(const CDataStream& vMsg)
 {
@@ -262,6 +255,12 @@ bool CTransaction::ReadFromDisk(CTxDB& txdb, COutPoint prevout, CTxIndex& txinde
         return false;
     }
     return true;
+}
+
+bool CTransaction::ReadFromDisk(CTxDB& txdb, COutPoint prevout)
+{
+    CTxIndex txindex;
+    return ReadFromDisk(txdb, prevout, txindex);
 }
 
 bool CTransaction::ReadFromDisk(COutPoint prevout)
@@ -701,7 +700,7 @@ int CMerkleTx::GetBlocksToMaturity() const
 {
     if (!IsCoinBase())
         return 0;
-    return max(0, (COINBASE_MATURITY+15) - GetDepthInMainChain());
+    return max(0, (COINBASE_MATURITY) - GetDepthInMainChain());
 }
 
 
@@ -899,24 +898,15 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 	if (nHeight > 35000 && nSubsidy < nMinReward)
     {
         nSubsidy = nMinReward;
-    }
+	}
 
-	return nSubsidy + nFees; //ends the reward scope correctly.
+    return nSubsidy + nFees;
 }
 
-static const int64 nTargetTimespan =  1 * 90 * 3;               //   new retarget is every 3 blocks, respectively
-static const int64 nTargetSpacing = 1 * 90;                    //  1.5 minutes
+static const int64 nTargetTimespan = 3 * 90; //  >6 hours
+static const int64 nTargetSpacing = 1 * 90; //  1.5 minutes
 static const int64 nInterval = nTargetTimespan / nTargetSpacing;
 
-// the following scope should stop the coin from getting stuck at high difficulty. 
-// its original comments are left for historical notoriety.
-
-//--------------------------------------------------------//
-
-// Thanks: Balthazar for suggesting the following fix
-// https://bitcointalk.org/index.php?topic=182430.msg1904506#msg1904506
-static const int64 nReTargetHistoryFact = 4; // look at 4 times the retarget
-                                             // interval into the block history
 
 //
 // minimum amount of work that could possibly be required nTime after
@@ -974,28 +964,20 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
         return pindexLast->nBits;
     }
 
-    // Litecoin: This fixes an issue where a 51% attack can change difficulty at will.
+    // nanotoken: This fixes an issue where a 51% attack can change difficulty at will.
     // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
     int blockstogoback = nInterval-1;
     if ((pindexLast->nHeight+1) != nInterval)
         blockstogoback = nInterval;
-    if (pindexLast->nHeight > COINFIX1_BLOCK) {
-        blockstogoback = nReTargetHistoryFact * nInterval;
-    }
 
-    // Go back by what we want to be nReTargetHistoryFact*nInterval blocks
+    // Go back by what we want to be 14 days worth of blocks
     const CBlockIndex* pindexFirst = pindexLast;
     for (int i = 0; pindexFirst && i < blockstogoback; i++)
         pindexFirst = pindexFirst->pprev;
     assert(pindexFirst);
 
     // Limit adjustment step
-    int64 nActualTimespan = 0;
-    if (pindexLast->nHeight > COINFIX1_BLOCK)
-        // obtain average actual timespan
-        nActualTimespan = (pindexLast->GetBlockTime() - pindexFirst->GetBlockTime())/nReTargetHistoryFact;
-    else
-        nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
+    int64 nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
     printf("  nActualTimespan = %"PRI64d"  before bounds\n", nActualTimespan);
     if (nActualTimespan < nTargetTimespan/4)
         nActualTimespan = nTargetTimespan/4;
@@ -1879,8 +1861,8 @@ bool CBlock::AcceptBlock()
             return DoS(10, error("AcceptBlock() : contains a non-final transaction"));
 
     // Check that the block chain matches the known block chain up to a checkpoint
-	if (!Checkpoints::CheckBlock(nHeight, hash))
-    return DoS(100, error("AcceptBlock() : rejected by checkpoint lockin at %d", nHeight));
+    if (!Checkpoints::CheckBlock(nHeight, hash))
+        return DoS(100, error("AcceptBlock() : rejected by checkpoint lockin at %d", nHeight));
 
     // Write block to history file
     if (!CheckDiskSpace(::GetSerializeSize(*this, SER_DISK, CLIENT_VERSION)))
@@ -2001,7 +1983,7 @@ bool CheckDiskSpace(uint64 nAdditionalBytes)
         string strMessage = _("Warning: Disk space is low");
         strMiscWarning = strMessage;
         printf("*** %s\n", strMessage.c_str());
-        uiInterface.ThreadSafeMessageBox(strMessage, "FooCoin", CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
+        uiInterface.ThreadSafeMessageBox(strMessage, "nanotoken", CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
         StartShutdown();
         return false;
     }
@@ -2053,10 +2035,10 @@ bool LoadBlockIndex(bool fAllowNew)
 {
     if (fTestNet)
     {
-        pchMessageStart[0] = 0xfb;
-        pchMessageStart[1] = 0xc0;
-        pchMessageStart[2] = 0xb8;
-        pchMessageStart[3] = 0xdb;
+        pchMessageStart[0] = 0xfc;
+        pchMessageStart[1] = 0xc1;
+        pchMessageStart[2] = 0xb7;
+        pchMessageStart[3] = 0xdc;
         hashGenesisBlock = uint256("0xc843223185b61ec82a9b3e80c3bb6b51d5e2e185a3d7f1fa7a30bd0ffc9b2131");
     }
 
@@ -2075,10 +2057,8 @@ bool LoadBlockIndex(bool fAllowNew)
     {
         if (!fAllowNew)
             return false;
-    
-        
 
-
+        // Genesis Block:
 
         // Genesis block
         const char* pszTimestamp = " People should read their source. This code was fixed from an obliteration by muddafudda @ bitcointalk.org";
@@ -2087,13 +2067,12 @@ bool LoadBlockIndex(bool fAllowNew)
         txNew.vout.resize(1);
         txNew.vin[0].scriptSig = CScript() << 486604799 << CBigNum(4) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
         txNew.vout[0].nValue = 20 * COIN;
-        txNew.vout[0].scriptPubKey = CScript() << ParseHex("04a58148131r3wt15273a109cff99907ba4a05d951873dae7acb6c973d0c9e7c88911a3dbc9aa600deac241b91707e7b4ffb30ad91c8e56e695a1ddf318592988afe0a") << OP_CHECKSIG;
+        txNew.vout[0].scriptPubKey = CScript() << ParseHex("04a5814813115273a109cff99907ba4a05d951873dae7acb6c973d0c9e7c88911a3dbc9aa600deac241b91707e7b4ffb30ad91c8e56e695a1ddf318592988afe0a") << OP_CHECKSIG;
         CBlock block;
         block.vtx.push_back(txNew);
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-		
         block.nTime    = 1372688511;
         block.nBits    = 0x1e0ffff0;
         block.nNonce   = 115035;
@@ -2108,7 +2087,7 @@ bool LoadBlockIndex(bool fAllowNew)
         printf("%s\n", block.GetHash().ToString().c_str());
         printf("%s\n", hashGenesisBlock.ToString().c_str());
         printf("%s\n", block.hashMerkleRoot.ToString().c_str());
-
+        
         assert(block.hashMerkleRoot == uint256("0xfb9f161de41051a001364b507cae2d8fa2576741edc7ed777e638510df98f8a7"));
 
         // If genesis block hash does not match, then generate new genesis hash.
@@ -2455,8 +2434,7 @@ bool static AlreadyHave(CTxDB& txdb, const CInv& inv)
 // The message start string is designed to be unlikely to occur in normal data.
 // The characters are rarely used upper ascii, not valid as UTF-8, and produce
 // a large 4-byte int at any alignment.
-// unsigned char pchMessageStart[4] = { 0xfb, 0xd9, 0xb9, 0xdd };
-unsigned char pchMessageStart[4] = { 0xfb, 0xc9, 0xb6, 0xdd }; // nanotoken: increase each by adding 2 to bitcoin's value.
+unsigned char pchMessageStart[4] = { 0xfb, 0xc0, 0xb6, 0xdf }; // nanotoken: increase each by adding 2 to bitcoin's value.
 
 
 bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
@@ -3544,7 +3522,7 @@ CBlock* CreateNewBlock(CReserveKey& reservekey)
                 continue;
 
             // Transaction fee required depends on block size
-            // Litecoind: Reduce the exempted free transactions to 500 bytes (from Bitcoin's 3000 bytes)
+            // nanotokend: Reduce the exempted free transactions to 500 bytes (from Bitcoin's 3000 bytes)
             bool fAllowFree = (nBlockSize + nTxSize < 1500 || CTransaction::AllowFree(dPriority));
             int64 nMinFee = tx.GetMinFee(nBlockSize, fAllowFree, GMF_BLOCK);
 
