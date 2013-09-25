@@ -11,10 +11,10 @@
 // Name of client reported in the 'version' message. Report the same name
 // for both bitcoind and bitcoin-qt, to make it harder for attackers to
 // target servers or GUI users specifically.
-const std::string CLIENT_NAME("nanotoken");
+const std::string CLIENT_NAME("Nanotoken");
 
 // Client version number
-#define CLIENT_VERSION_SUFFIX   "-alpha3"
+#define CLIENT_VERSION_SUFFIX   "-r3"
 
 
 // The following part of the code determines the CLIENT_BUILD variable.
@@ -40,7 +40,7 @@ const std::string CLIENT_NAME("nanotoken");
 #define GIT_ARCHIVE 1
 #ifdef GIT_ARCHIVE
 #    define GIT_COMMIT_ID "3aaa7ba"
-#    define GIT_COMMIT_DATE "$Format:%cD"
+#    define GIT_COMMIT_DATE "$9/25/13"
 #endif
 
 #define STRINGIFY(s) #s
