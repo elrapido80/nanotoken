@@ -47,3 +47,5 @@ static const int NOBLKS_VERSION_END = 60008;
 
 // BIP 0031, pong message, is enabled for all versions AFTER this one
 static const int BIP0031_VERSION = 60000;
+
+#endif
