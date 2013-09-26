@@ -1,7 +1,7 @@
 // Copyright (c) 2012 The Bitcoin developers
 // Copyright (c) 2012 Litecoin Developers
 // Copyright (c) 2013 Nanotoken Developers
-// Copyright (c) 2013 Nanotoken Developers
+
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #ifndef BITCOIN_VERSION_H
@@ -17,7 +17,7 @@
 #define CLIENT_VERSION_MAJOR       3
 #define CLIENT_VERSION_MINOR       0
 #define CLIENT_VERSION_REVISION    0
-#define CLIENT_VERSION_BUILD       0
+#define CLIENT_VERSION_BUILD       3
 
 static const int CLIENT_VERSION =
                            1000000 * CLIENT_VERSION_MAJOR
@@ -32,21 +32,18 @@ extern const std::string CLIENT_DATE;
 //
 // network protocol versioning
 //
+static const int PROTOCOL_VERSION = 65009;
 
-static const int PROTOCOL_VERSION = 62002;
-
-// earlier versions not supported as of Feb 2012, and are disconnected
-static const int MIN_PROTO_VERSION = 62001;
+// earlier versions of nanotoken not supported
+static const int MIN_PROTO_VERSION = 60008;
 
 // nTime field added to CAddress, starting with this version;
 // if possible, avoid requesting addresses nodes older than this
 static const int CADDR_TIME_VERSION = 31402;
 
 // only request blocks from nodes outside this range of versions
-static const int NOBLKS_VERSION_START = 0;
-static const int NOBLKS_VERSION_END = 62000;
+static const int NOBLKS_VERSION_START = 32000;
+static const int NOBLKS_VERSION_END = 60008;
 
 // BIP 0031, pong message, is enabled for all versions AFTER this one
 static const int BIP0031_VERSION = 60000;
-
-#endif
