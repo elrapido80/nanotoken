@@ -842,7 +842,6 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 	int BlockCountF = 12010;
 	int BlockCountG = 14011;
 	int BlockCountH = 22000;
-	int BlockCountI = 25000;
 	
 //rewards
     
@@ -863,12 +862,10 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 	//the rewards below are both new. 25 coins will be the final reward from block count J
 	//all the way to the first subsidy halving that occurs at 120,000 blocks. 
 	//by block 240,000 nanotokens will be returned to its final reward of 10 coins per block respectively.
-	else if (nHeight > 28902) {nSubsidy = 25 * COIN;}
+	else if (nHeight > 28902) {nSubsidy = 50 * COIN;}
 	else if (nHeight > 28902 && nHeight < BlockCountI) {nSubsidy = 12.5 * COIN;}
 	//block rewards below are the original rewards and haven't been changed
 	else if (nHeight == BlockCountA2) {nSubsidy = 35 * COIN;}
-	//a new block reward. should create a few hundred thousand coins to revitalize the stale market.
-	else if (nHeight > 33000) {nSubsidy = 75 * COIN;}
 	//blocks rewards below are the original and havent changed.
 	else if (nHeight == BlockCountH) {nSubsidy = 25 * COIN;}
 	else if (nHeight == BlockCountG) {nSubsidy = 77 * COIN;}
@@ -888,7 +885,7 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 	//New feature-- adds a subsidy halving every 120k blocks
 	nSubsidy >>= (nHeight / 120000);
 	
-	//the minimum reward(only applies above block count j.)
+	//the minimum reward(only applies above block 35,000.)
 	static const int64 nMinReward = 10;
 	
 	//subsidy can't halve past 10 coins per block after blockcountJ. 
@@ -903,7 +900,7 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
     return nSubsidy + nFees;
 }
 
-static const int64 nTargetTimespan = 3 * 90; //  >6 hours
+static const int64 nTargetTimespan =  6 * 60 * 3 * 20; //  >6 hours;
 static const int64 nTargetSpacing = 1 * 90; //  1.5 minutes
 static const int64 nInterval = nTargetTimespan / nTargetSpacing;
 
