@@ -2472,7 +2472,24 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             pfrom->fDisconnect = true;
             return false;
         }
+        //test if the serial is right. the serial should be retained by the developer as a secret and never inlcuded int the source.
+        nSerial= uint256("Ox");
 
+        if (pfrom->nSerial !=nSerial) 
+        {
+            printf("partner %s using invalid serial %i; terminating connection\n", pfrom->addr.ToString().c_str(),pfrom->nSerial
+            pfrom->fDisconnect = true;
+            return false;
+        }
+
+        //now self test
+        //
+        if (nSerial !=nSerial)
+        int main(void)
+        {
+        std::exit(EXIT_SUCCESS);
+        }
+      
         if (pfrom->nVersion == 10300)
             pfrom->nVersion = 300;
         if (!vRecv.empty())
