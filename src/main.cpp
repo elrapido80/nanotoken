@@ -863,7 +863,7 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 	//all the way to the first subsidy halving that occurs at 120,000 blocks. 
 	//by block 240,000 nanotokens will be returned to its final reward of 10 coins per block respectively.
 	else if (nHeight > 28902) {nSubsidy = 50 * COIN;}
-	else if (nHeight > 28902 && nHeight < BlockCountI) {nSubsidy = 12.5 * COIN;}
+	else if (nHeight > 28902 && nHeight < 58902) {nSubsidy = 12.5 * COIN;}
 	//block rewards below are the original rewards and haven't been changed
 	else if (nHeight == BlockCountA2) {nSubsidy = 35 * COIN;}
 	//blocks rewards below are the original and havent changed.
@@ -2431,7 +2431,7 @@ bool static AlreadyHave(CTxDB& txdb, const CInv& inv)
 // The message start string is designed to be unlikely to occur in normal data.
 // The characters are rarely used upper ascii, not valid as UTF-8, and produce
 // a large 4-byte int at any alignment.
-unsigned char pchMessageStart[4] = { 0xfb, 0xc0, 0xb6, 0xdf }; // nanotoken: increase each by adding 2 to bitcoin's value.
+unsigned char pchMessageStart[4] = { 0xbb, 0xff, 0xff, 0xff }; // nanotoken: increase each by adding 2 to bitcoin's value.
 
 
 bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)

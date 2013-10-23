@@ -14,7 +14,7 @@
 const std::string CLIENT_NAME("Nanotoken");
 
 // Client version number
-#define CLIENT_VERSION_SUFFIX   "-r3"
+#define CLIENT_VERSION_SUFFIX   "-r4"
 
 
 // The following part of the code determines the CLIENT_BUILD variable.
