@@ -863,7 +863,7 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 	//all the way to the first subsidy halving that occurs at 120,000 blocks. 
 	//by block 240,000 nanotokens will be returned to its final reward of 10 coins per block respectively.
 	else if (nHeight > 28902) {nSubsidy = 50 * COIN;}
-	else if (nHeight > 38902 && nHeight < 50000) {nSubsidy = 25 * COIN;}
+	else if (nHeight > 28902 && nHeight < BlockCountI) {nSubsidy = 12.5 * COIN;}
 	//block rewards below are the original rewards and haven't been changed
 	else if (nHeight == BlockCountA2) {nSubsidy = 35 * COIN;}
 	//blocks rewards below are the original and havent changed.
