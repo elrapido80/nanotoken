@@ -830,75 +830,76 @@ uint256 static GetOrphanRoot(const CBlock* pblock)
 
 int64 static GetBlockValue(int nHeight, int64 nFees)
 {
-    int64 nSubsidy = 1 * COIN;
+    int64 nSubsidy = 0 * COIN;
 
-//constants
-	int BlockCountA1= 2;
-	int BlockCountA2= 10;
-	int BlockCountB = 2000;
-	int BlockCountC = 10001;
-	int BlockCountD = 12000;
-	int BlockCountE = 12009;
-	int BlockCountF = 12010;
-	int BlockCountG = 14011;
-	int BlockCountH = 22000;
-	
-//rewards
-    
-	//this was the premine
-	if (nHeight == 2)
-	{
-		nSubsidy = 500000 * COIN;	
-	}
-	//this is the new "premine". used to repay those mining on the wrong chain and 
-	//especially the one investor who lost 60,000 of his 260,000(metric fuckton)
-	//nanotokens. hopefully this doesn't cause to much of a bitchfit. 
-	//i really don't care if it does though, a decision had to be made and 
-	//this rewards those who kept the coin alive.
-	else if (nHeight == 28902)
-	{
-	    nSubsidy = 250000 * COIN;
-	}
-	//the rewards below are both new. 25 coins will be the final reward from block count J
-	//all the way to the first subsidy halving that occurs at 120,000 blocks. 
-	//by block 240,000 nanotokens will be returned to its final reward of 10 coins per block respectively.
-	else if (nHeight > 28902) {nSubsidy = 50 * COIN;}
-	else if (nHeight > 28902 && nHeight < 58902) {nSubsidy = 12.5 * COIN;}
-	//block rewards below are the original rewards and haven't been changed
-	else if (nHeight == BlockCountA2) {nSubsidy = 35 * COIN;}
-	//blocks rewards below are the original and havent changed.
-	else if (nHeight == BlockCountH) {nSubsidy = 25 * COIN;}
-	else if (nHeight == BlockCountG) {nSubsidy = 77 * COIN;}
-	else if (nHeight == BlockCountF) {nSubsidy = 20 * COIN;}
-	else if (nHeight == BlockCountE) {nSubsidy = 100 * COIN;}
-	else if (nHeight == BlockCountD) {nSubsidy = 15 * COIN;}
-	else if (nHeight == BlockCountC * 2) {nSubsidy = 2000 * COIN;}
-	else if (nHeight == BlockCountC) {nSubsidy = 20 * COIN;}
-	else if (nHeight == BlockCountB * 5) {nSubsidy = 10000 * COIN;}
-	else if (nHeight == BlockCountB * 4) {nSubsidy = 2500 * COIN;}
-	else if (nHeight == BlockCountB * 3) {nSubsidy = 250 * COIN;}
-	else if (nHeight == BlockCountB * 2) {nSubsidy = 500 * COIN;}
-	else if (nHeight == BlockCountB) {nSubsidy = 50 * COIN;}
-	else if (nHeight == BlockCountA1) {nSubsidy = 5 * COIN;}
-	else {nSubsidy = 10 * COIN;}
-	
-	//New feature-- adds a subsidy halving every 120k blocks
-	nSubsidy >>= (nHeight / 120000);
-	
-	//the minimum reward(only applies above block 35,000.)
-	static const int64 nMinReward = 10;
-	
-	//subsidy can't halve past 10 coins per block after blockcountJ. 
-	//the reasoning is that some blocks have been less than 10 coins 
-	//prior and we don't want to make them invalid. 
-	//shake let me know if this won't work. i think it will
-	if (nHeight > 35000 && nSubsidy < nMinReward)
-    {
-        nSubsidy = nMinReward;
-	}
+        if (nHeight == 2) 
+		    nSubsidy = 500000 * COIN;
+		else if (nHeight == 10)
+		    nSubsidy = 35 * COIN;	
+		else if (nHeight == 2000)
+		    nSubsidy = 50 * COIN;
+        else if (nHeight == 4000)
+		    nSubsidy = 500 * COIN;
+        else if (nHeight == 6000)
+		    nSubsidy = 250 * COIN;
+        else if (nHeight == 8000)
+		    nSubsidy = 2500 * COIN;
+        else if (nHeight == 10000) 
+ 		    nSubsidy = 10000 * COIN;
+		else if (nHeight == 10001) 
+		    nSubsidy = 20 * COIN;	
+        else if (nHeight == 12000)
+		    nSubsidy = 15 * COIN;			
+        else if (nHeight == 12009)
+		    nSubsidy = 100 * COIN;			
+        else if (nHeight == 12010)
+		    nSubsidy = 20 * COIN;
+        else if (nHeight == 14011)
+		    nSubsidy = 77 * COIN;
+		else if (nHeight == 20002) 
+		    nSubsidy = 2000 * COIN;
+        else if (nHeight == 22000)
+		    nSubsidy = 25 * COIN;
+        else if (nHeight == 28902) 
+		    nSubsidy = 250000 * COIN;
+        else if (nHeight > 28902)
+		    nSubsidy = 50 * COIN;
+		else if (nHeight < 100001)
+		    nSubsidy = 45 * COIN;
+        else if (nHeight < 200001)
+		    nSubsidy = 40 * COIN;
+        else if (nHeight < 300001)
+		    nSubsidy = 36 * COIN;
+        else if (nHeight < 400001)
+		    nSubsidy = 32 * COIN;
+        else if (nHeight < 500001)
+		    nSubsidy = 28 * COIN;
+        else if (nHeight < 600001)
+		    nSubsidy = 25 * COIN;
+        else if (nHeight < 700001)
+		    nSubsidy = 22 * COIN;
+        else if (nHeight < 800001)
+		    nSubsidy = 19 * COIN;
+        else if (nHeight < 900001)
+		    nSubsidy = 16 * COIN;
+        else if (nHeight < 1000001)
+		    nSubsidy = 14 * COIN;
+        else if (nHeight < 1100001)
+		    nSubsidy = 12 * COIN;
+        else if (nHeight < 1200001)
+		    nSubsidy = 10 * COIN;
+        else if (nHeight < 1300001) 
+		    nSubsidy = 8 * COIN;
+        else if (nHeight < 1400001)
+		    nSubsidy = 6 * COIN;
+        else if (nHeight < 1500001)
+		    nSubsidy = 5 * COIN;
+        else if (nHeight < 1600001)
+		    nSubsidy = 0 * COIN;
 
     return nSubsidy + nFees;
 }
+
 
 static const int64 nTargetTimespan =  6 * 60 * 3 * 20; //  >6 hours;
 static const int64 nTargetSpacing = 1 * 90; //  1.5 minutes
