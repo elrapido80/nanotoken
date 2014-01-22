@@ -937,7 +937,7 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 if (nHeight < 110001){
 	static const int64 nTargetTimespan = 60*60*6;        // 6 hours
 }else{
-        nTargetTimespan = 40*90;                // 40 blocks each 90 seconds
+        static const int64 nTargetTimespan = 40*90;                // 40 blocks each 90 seconds
 }
 
 static const int64 nTargetSpacing = 90;         // 90 seconds per block
